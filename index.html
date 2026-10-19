@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#493047">
+    <meta name="referrer" content="no-referrer">
+    <meta name="description" content="Tạo một tấm thiệp viết tay theo cách của bạn, rồi gửi riêng cho người thương bằng mã QR.">
+    <title>Gửi một điều thương</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="site-shell">
+        <header class="site-header">
+            <a class="brand" href="./" aria-label="Về trang tạo thiệp">
+                <span class="brand-mark" aria-hidden="true">♡</span>
+                <span>một điều thương</span>
+            </a>
+            <a class="quiet-link" href="?review=1">Khu vực duyệt thiệp</a>
+        </header>
+
+        <section class="intro" id="intro">
+            <p class="eyebrow">Một tấm thiệp, lời của riêng bạn</p>
+            <h1>Điều muốn nói,<br><span>viết thành một tấm thiệp.</span></h1>
+            <p class="intro-copy">Tự chọn màu nền, viết lời nhắn theo cách của bạn. Thiệp sẽ được duyệt trước khi bạn nhận liên kết và mã QR để gửi đi.</p>
+        </section>
+
+        <p class="notice" id="siteNotice" role="status" hidden></p>
+
+        <section id="createView" class="workspace">
+            <form class="editor panel" id="letterForm">
+                <div class="section-heading">
+                    <span class="step">01</span>
+                    <div>
+                        <h2>Soạn lời nhắn</h2>
+                        <p>Viết như đang nói chuyện với người ấy.</p>
+                    </div>
+                </div>
+
+                <label for="recipient">Gửi đến</label>
+                <input id="recipient" name="recipient" maxlength="80" placeholder="Ví dụ: Chị Hai" required>
+
+                <label for="occasion">Chủ đề</label>
+                <select id="occasion" name="occasion">
+                    <option value="love">Một lời thương</option>
+                    <option value="birthday">Sinh nhật</option>
+                    <option value="thanks">Lời cảm ơn</option>
+                    <option value="encouragement">Động viên</option>
+                    <option value="apology">Lời xin lỗi</option>
+                    <option value="celebration">Dịp đặc biệt</option>
+                    <option value="custom">Chủ đề của riêng mình</option>
+                </select>
+
+                <label for="title">Tiêu đề thiệp</label>
+                <input id="title" name="title" maxlength="120" placeholder="Ví dụ: Gửi chị một chút yêu thương" required>
+
+                <label for="message">Nội dung thư</label>
+                <textarea id="message" name="message" maxlength="4000" rows="8" placeholder="Cứ viết tự nhiên bằng lời của bạn. Thiệp sẽ giữ nguyên những gì bạn viết." required></textarea>
+                <div class="field-meta"><span>Không có nội dung AI tự sinh.</span><span id="messageCount">0 / 4000</span></div>
+
+                <label for="signoff">Ký tên</label>
+                <input id="signoff" name="signoff" maxlength="120" placeholder="Ví dụ: Đứa em hay chọc chị" required>
+
+                <div class="section-heading compact-heading">
+                    <span class="step">02</span>
+                    <div>
+                        <h2>Chọn phong cách</h2>
+                        <p>Chọn nền có sẵn và màu nhấn bạn thích.</p>
+                    </div>
+                </div>
+
+                <label for="theme">Mẫu nền</label>
+                <select id="theme" name="theme">
+                    <option value="rose">Hồng dịu dàng</option>
+                    <option value="lavender">Tím mộng mơ</option>
+                    <option value="night">Đêm đầy sao</option>
+                    <option value="garden">Khu vườn xanh</option>
+                    <option value="sunset">Hoàng hôn ấm áp</option>
+                </select>
+
+                <label class="color-label" for="accent">
+                    Màu nhấn
+                    <input id="accent" name="accent" type="color" value="#d66b87" aria-label="Chọn màu nhấn cho thiệp">
+                </label>
+
+                <button class="primary-button" id="submitLetter" type="submit">Gửi thiệp để duyệt <span aria-hidden="true">→</span></button>
+                <p class="privacy-note">Nội dung được lưu trên máy chủ để chủ trang duyệt. Sau khi phát hành, người nhận chỉ xem thiệp, không thể sửa nội dung.</p>
+            </form>
+
+            <aside class="preview-column">
+                <div class="preview-label"><span class="live-dot"></span> Xem trước</div>
+                <article class="letter-card theme-rose" id="previewCard">
+                    <span class="card-sparkle" aria-hidden="true">✦</span>
+                    <p class="card-to" id="previewRecipient">Gửi đến người thương</p>
+                    <div class="card-divider"><span>♡</span></div>
+                    <h2 id="previewTitle">Tiêu đề tấm thiệp</h2>
+                    <p class="card-message" id="previewMessage">Lời nhắn bạn viết sẽ hiện ở đây. Hãy cứ dùng lời của chính mình nhé.</p>
+                    <p class="card-signoff" id="previewSignoff">Thân mến,</p>
+                    <span class="card-flower" aria-hidden="true">✿</span>
+                </article>
+                <div class="review-explainer">
+                    <span class="lock-icon" aria-hidden="true">⌑</span>
+                    <p><strong>Thiệp riêng tư</strong><br>Sau khi gửi, thiệp chờ chủ trang duyệt. Nội dung không xuất hiện trong danh sách công khai.</p>
+                </div>
+            </aside>
+        </section>
+
+        <section id="draftView" class="single-panel panel" hidden>
+            <div class="result-icon" id="draftIcon" aria-hidden="true">✉</div>
+            <p class="eyebrow">Trạng thái thiệp</p>
+            <h2 id="draftTitle">Thiệp đã được gửi</h2>
+            <p id="draftStatus" class="result-copy"></p>
+            <div id="draftManage">
+                <button class="secondary-button" id="copyDraftLink" type="button">Sao chép liên kết kiểm tra</button>
+            </div>
+            <div id="shareResult" hidden>
+                <p class="result-copy">Thiệp đã được duyệt. Gửi liên kết hoặc để người ấy quét mã bên dưới nhé.</p>
+                <div class="share-row">
+                    <input id="shareUrl" readonly aria-label="Liên kết đọc thiệp">
+                    <button class="secondary-button" id="copyLink" type="button">Sao chép</button>
+                </div>
+                <div class="qr-frame" id="qrFrame">
+                    <div id="qrCode" aria-label="Mã QR mở thiệp"></div>
+                </div>
+                <button class="secondary-button" id="downloadQr" type="button">Tải ảnh mã QR</button>
+                <p class="privacy-note">Mã QR chỉ mở bản đọc thiệp; không cấp quyền sửa. Ai có liên kết đều có thể xem, nên hãy chỉ gửi cho người nhận.</p>
+            </div>
+            <button class="secondary-button" id="checkStatus" type="button">Kiểm tra lại trạng thái</button>
+            <p class="small-note">Hãy lưu liên kết quản lý này. Đây là cách duy nhất để xem trạng thái và lấy mã QR của thiệp bạn đã gửi.</p>
+        </section>
+
+        <section id="readView" class="single-panel read-panel" hidden>
+            <p class="eyebrow">Một lời nhắn dành riêng cho bạn</p>
+            <article class="letter-card theme-rose" id="readCard">
+                <span class="card-sparkle" aria-hidden="true">✦</span>
+                <p class="card-to" id="readRecipient"></p>
+                <div class="card-divider"><span>♡</span></div>
+                <h2 id="readTitle"></h2>
+                <p class="card-message" id="readMessage"></p>
+                <p class="card-signoff" id="readSignoff"></p>
+                <span class="card-flower" aria-hidden="true">✿</span>
+            </article>
+            <p class="read-footer">Viết riêng cho bạn, bằng lời của một người thật lòng quan tâm. ♡</p>
+        </section>
+
+        <section id="reviewView" class="panel review-panel" hidden>
+            <p class="eyebrow">Chủ trang</p>
+            <h2>Duyệt thiệp trước khi gửi</h2>
+            <p class="result-copy">Chỉ thiệp được duyệt mới có liên kết đọc và mã QR.</p>
+            <form id="reviewLogin" class="review-login">
+                <label for="adminToken">Mã quản trị</label>
+                <input id="adminToken" type="password" maxlength="300" autocomplete="current-password" required>
+                <button class="primary-button" type="submit">Mở danh sách chờ duyệt</button>
+            </form>
+            <p id="reviewError" class="inline-error" role="alert" hidden></p>
+            <div id="pendingList" class="pending-list"></div>
+        </section>
+
+        <footer class="site-footer">
+            <span>Được viết bằng lời của bạn, gửi bằng tất cả sự chân thành.</span>
+            <span>♡</span>
+        </footer>
+    </main>
+
+    <script src="app-config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

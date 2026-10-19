@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="0; url=./index.html">
+    <script>window.location.replace(new URL('./index.html', window.location.href).href);</script>
+    <title>Happy Vietnamese Women's Day 20/10</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #030825, #0a194f, #1b367d);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            max-height: 850px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 30px 20px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Hiệu ứng bầu trời sao và đom đóm */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 160px 120px, #ffd700, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: twinkle 4s infinite linear;
+            z-index: 1;
+        }
+
+        .ambient-effects {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .ambient-item {
+            position: absolute;
+            bottom: -40px;
+            white-space: nowrap;
+            color: #ffb3c1;
+            text-shadow: 0 0 12px rgba(255, 117, 140, 0.8);
+            animation: ambient-float 7s linear forwards;
+        }
+
+        .ambient-message {
+            color: #ffe6eb;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        @keyframes ambient-float {
+            0% { transform: translateY(0) rotate(-8deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            85% { opacity: 0.7; }
+            100% { transform: translateY(-110vh) rotate(8deg); opacity: 0; }
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        /* Màn hình mở đầu (Nhấn giữ để mở) */
+        .welcome-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(3, 8, 37, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            transition: opacity 0.8s ease;
+        }
+
+        .welcome-screen h2 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: #ffccd5;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+            text-align: center;
+            padding: 0 15px;
+        }
+
+        .pulse-btn {
+            position: relative;
+            overflow: hidden;
+            padding: 15px 35px;
+            font-size: 18px;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(255, 117, 140, 0.6);
+            animation: pulse 1.5s infinite;
+            cursor: pointer;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .pulse-btn::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+
+        .pulse-btn.holding::after {
+            animation: hold-progress 1.2s linear forwards;
+        }
+
+        @keyframes hold-progress {
+            to { transform: scaleX(1); }
+        }
+
+        .hold-hint {
+            margin-top: 18px;
+            color: #ffe6eb;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 117, 140, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 117, 140, 0); }
+        }
+
+        /* Nội dung thiệp chính */
+        .main-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            opacity: 0;
+            transition: opacity 1s ease;
+            pointer-events: none;
+        }
+
+        .main-content.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        header {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        h1 {
+            font-size: 26px;
+            color: #ffe6eb;
+            text-shadow: 0 0 15px rgba(255, 182, 193, 0.8);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 13px;
+            color: #a0c4ff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Bó hoa Tulip */
+        .bouquet-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin: 0;
+            flex: 0 0 auto;
+        }
+
+        .tulip-bouquet {
+            display: block;
+            width: 136px;
+            height: 166px;
+            filter: drop-shadow(0 5px 8px rgba(255, 105, 180, 0.28));
+            animation: sway 3s ease-in-out infinite alternate;
+        }
+
+        .tulip-flower {
+            cursor: pointer;
+            transform-box: fill-box;
+            transform-origin: center;
+            transition: filter 0.2s ease;
+        }
+
+        .tulip-flower:hover,
+        .tulip-flower:focus {
+            filter: brightness(1.12) drop-shadow(0 0 4px #fff);
+            outline: none;
+        }
+
+        .tulip-flower:focus-visible {
+            filter: brightness(1.15) drop-shadow(0 0 5px #fff);
+        }
+
+        .tulip-flower.picked {
+            animation: pluck-tulip 0.45s ease-in forwards;
+            pointer-events: none;
+        }
+
+        @keyframes pluck-tulip {
+            to { transform: translateY(-38px) rotate(18deg) scale(0.45); opacity: 0; }
+        }
+
+        @keyframes sway {
+            0% { transform: rotate(-3deg); }
+            100% { transform: rotate(3deg); }
+        }
+
+        .envelope-icon {
+            margin-top: 2px;
+            background: transparent;
+            color: #ffccd5;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Hộp thư / Lời chúc */
+        .modal-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 88%;
+            max-height: 75vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: #333;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 20;
+            overflow-y: auto;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-card.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .modal-card h3 {
+            color: #d63384;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .modal-card p {
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            color: #444;
+            text-align: justify;
+        }
+
+        .close-modal {
+            display: block;
+            margin: 15px auto 0;
+            padding: 8px 25px;
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Slider ảnh kỷ niệm */
+        .memory-lane {
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .memory-title {
+            font-size: 12px;
+            color: #ffccd5;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .photo-gallery {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            scrollbar-width: none;
+        }
+
+        .photo-gallery::-webkit-scrollbar {
+            display: none;
+        }
+
+        .photo-item {
+            display: block;
+            min-width: 70px;
+            height: 90px;
+            padding: 0;
+            background: transparent;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.6);
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+            cursor: zoom-in;
+        }
+
+        .photo-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .photo-item.photo-dissolving {
+            pointer-events: none;
+            animation: dissolve-photo 1s ease forwards;
+        }
+
+        .photo-item[hidden] {
+            display: none;
+        }
+
+        @keyframes dissolve-photo {
+            to {
+                opacity: 0;
+                filter: blur(9px);
+                transform: scale(0.72) rotate(8deg);
+            }
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .memory-hint {
+            margin-top: 7px;
+            color: #ffccd5;
+            font-size: 11px;
+        }
+
+        .image-viewer {
+            position: absolute;
+            inset: 0;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 55px 48px;
+            background: rgba(3, 8, 37, 0.94);
+        }
+
+        .image-viewer[hidden] {
+            display: none;
+        }
+
+        .viewer-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border: 3px solid rgba(255, 255, 255, 0.85);
+            border-radius: 14px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55);
+        }
+
+        .viewer-button {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            color: #d63384;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .viewer-close {
+            top: 14px;
+            right: 14px;
+            font-size: 28px;
+        }
+
+        .viewer-previous {
+            left: 8px;
+        }
+
+        .viewer-next {
+            right: 8px;
+        }
+
+        .viewer-counter {
+            position: absolute;
+            bottom: 18px;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .final-wish {
+            position: absolute;
+            inset: 0;
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background:
+                radial-gradient(circle at 50% 30%, rgba(255, 117, 140, 0.34), transparent 45%),
+                linear-gradient(160deg, #090d37, #32153f 58%, #702d57);
+            animation: wish-appear 1s ease both;
+        }
+
+        .final-wish[hidden] {
+            display: none;
+        }
+
+        @keyframes wish-appear {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .wish-card {
+            width: 100%;
+            padding: 28px 23px;
+            border: 1px solid rgba(255, 230, 235, 0.45);
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.28);
+            text-align: center;
+            backdrop-filter: blur(8px);
+        }
+
+        .wish-card h2 {
+            margin-bottom: 20px;
+            color: #ffe6eb;
+            font-size: 25px;
+            text-shadow: 0 0 16px rgba(255, 117, 140, 0.6);
+        }
+
+        .wish-card p {
+            margin-bottom: 14px;
+            color: #fff4f6;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .wish-signature {
+            margin-top: 22px;
+            color: #ffd0dc;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .wish-replay {
+            margin-top: 22px;
+            padding: 10px 20px;
+            border: 0;
+            border-radius: 22px;
+            background: #ff8fa3;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Trái tim bay */
+        .heart {
+            position: absolute;
+            color: #ff758c;
+            font-size: 20px;
+            animation: flyUp 3s linear forwards;
+            pointer-events: none;
+            z-index: 15;
+        }
+
+        @keyframes flyUp {
+            0% { transform: translateY(0) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-400px) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container" id="mainContainer">
+        <div class="stars"></div>
+        <div class="ambient-effects" id="ambientEffects" aria-hidden="true"></div>
+
+        <!-- Màn hình chào mừng -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <h2>Gửi Mẹ Yêu Quý ❤️</h2>
+            <button class="pulse-btn" id="openGiftButton" type="button" aria-describedby="holdHint">
+                <span>Nhấn giữ để mở quà 20/10</span>
+            </button>
+            <p class="hold-hint" id="holdHint">Giữ nút trong giây lát để mở món quà ❤️</p>
+        </div>
+
+        <!-- Giao diện chính thiệp -->
+        <div class="main-content" id="mainContent">
+            <header>
+                <h1>Happy Vietnamese<br>Women's Day 20/10</h1>
+                <p class="quote">" TRỜI LÀM MÁ EM THÊM HỒNG "</p>
+            </header>
+
+            <!-- Bó hoa Tulip & Phong thư -->
+            <div class="bouquet-section">
+                <svg class="tulip-bouquet" viewBox="0 0 220 250" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="wrap" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" stop-color="#fff0d9"/>
+                            <stop offset="1" stop-color="#d9b98d"/>
+                        </linearGradient>
+                        <linearGradient id="petal" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0" stop-color="#ffd0dc"/>
+                            <stop offset="1" stop-color="#f05c83"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M43 137 Q109 158 177 137 L148 229 Q110 247 72 229 Z" fill="url(#wrap)"/>
+                    <path d="M57 143 L110 211 L163 143 Q139 154 110 155 Q81 154 57 143Z" fill="#fff8ed" opacity=".75"/>
+                    <path d="M68 149 L110 232 L95 157Z" fill="#d8b78d" opacity=".58"/>
+                    <path d="M152 149 L110 232 L125 157Z" fill="#fffdf7" opacity=".8"/>
+                    <path d="M82 135 Q66 110 76 101 Q94 111 96 137Z" fill="#4e9f68"/>
+                    <path d="M133 139 Q153 112 164 119 Q161 140 137 151Z" fill="#5cab70"/>
+                    <path d="M102 143 Q89 112 101 101 Q117 116 112 147Z" fill="#3f8e5a"/>
+                    <path d="M79 134 Q79 112 70 91 M105 136 Q106 104 107 70 M131 140 Q137 112 151 92 M94 143 Q90 117 90 101 M119 141 Q124 115 125 99"
+                          fill="none" stroke="#397e50" stroke-width="3.5" stroke-linecap="round"/>
+                    <g class="tulip-flower" role="button" tabindex="0" aria-label="Hái hoa tulip thứ nhất để đọc thư" data-letter-index="0">
+                        <path d="M57 96 Q53 80 61 65 Q69 71 75 59 Q82 71 90 64 Q98 81 91 97 Q75 108 57 96Z" fill="url(#petal)" stroke="#e8587b" stroke-width="1.2" stroke-linejoin="round"/>
+                        <path d="M74 94 Q74 82 75 70" fill="none" stroke="#ffe7ed" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+                    </g>
+                    <g class="tulip-flower" role="button" tabindex="0" aria-label="Hái hoa tulip thứ hai để đọc thư" data-letter-index="1">
+                        <path d="M87 77 Q83 57 92 40 Q101 47 108 33 Q116 47 125 40 Q133 59 128 78 Q108 91 87 77Z" fill="url(#petal)" stroke="#e8587b" stroke-width="1.2" stroke-linejoin="round"/>
+                        <path d="M105 74 Q106 60 108 46" fill="none" stroke="#ffe7ed" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+                    </g>
+                    <g class="tulip-flower" role="button" tabindex="0" aria-label="Hái hoa tulip thứ ba để đọc thư" data-letter-index="2">
+                        <path d="M113 94 Q110 76 119 60 Q127 67 134 54 Q142 68 151 62 Q159 80 153 96 Q133 108 113 94Z" fill="url(#petal)" stroke="#e8587b" stroke-width="1.2" stroke-linejoin="round"/>
+                        <path d="M133 91 Q134 79 135 66" fill="none" stroke="#ffe7ed" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+                    </g>
+                    <g class="tulip-flower" role="button" tabindex="0" aria-label="Hái hoa tulip thứ tư để đọc thư" data-letter-index="3">
+                        <path d="M72 111 Q68 98 75 85 Q82 91 88 80 Q96 92 103 86 Q110 101 104 113 Q88 123 72 111Z" fill="url(#petal)" stroke="#e8587b" stroke-width="1.2" stroke-linejoin="round"/>
+                        <path d="M89 109 Q90 101 90 92" fill="none" stroke="#ffe7ed" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+                    </g>
+                    <g class="tulip-flower" role="button" tabindex="0" aria-label="Hái hoa tulip thứ năm để đọc thư" data-letter-index="4">
+                        <path d="M111 113 Q108 99 115 86 Q122 92 129 81 Q136 93 144 87 Q151 102 145 114 Q129 124 111 113Z" fill="url(#petal)" stroke="#e8587b" stroke-width="1.2" stroke-linejoin="round"/>
+                        <path d="M129 111 Q130 103 130 93" fill="none" stroke="#ffe7ed" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+                    </g>
+                    <path d="M94 177 Q110 187 126 177 L122 198 Q110 207 98 198Z" fill="#ff758c"/>
+                    <path d="M101 184 L88 199 Q84 206 97 202 L109 191Z" fill="#ff8fa3"/>
+                    <path d="M115 191 L128 202 Q137 205 132 196 L122 184Z" fill="#ff8fa3"/>
+                    <circle cx="110" cy="187" r="5" fill="#ffd0dc"/>
+                </svg>
+                <div class="envelope-icon">🌷 Chạm từng bông hoa để hái và đọc thư</div>
+            </div>
+
+            <!-- Thanh trượt ảnh kỷ niệm -->
+            <div class="memory-lane">
+                <div class="memory-title">✨ Kỷ niệm yêu thương của chúng ta ✨</div>
+                <div class="photo-gallery">
+                    <button class="photo-item" type="button" aria-label="Xem ảnh kỷ niệm 1"><img src="https://6ad58ee0106919c03a91f806.imgix.net/sandbox/1792379056014_111795119986068646_2309522099900149030_f1e8efb0b358984eb3af5679ee89b464.jpg" alt="Ảnh kỷ niệm 1"></button>
+                    <button class="photo-item" type="button" aria-label="Xem ảnh kỷ niệm 2"><img src="https://6ad58ee0106919c03a91f806.imgix.net/sandbox/1792379131197_111795119986068646_2309522099900149030_e431dcf81322ca3ac6ca3bafa5fa9a5a.jpg" alt="Ảnh kỷ niệm 2"></button>
+                    <button class="photo-item" type="button" aria-label="Xem ảnh kỷ niệm 3"><img src="https://6ad58ee0106919c03a91f806.imgix.net/sandbox/1792379242795_111795119986068646_2309522099900149030_e3dace9b2df572c62459baadc71654f4.jpg" alt="Ảnh kỷ niệm 3"></button>
+                    <button class="photo-item" type="button" aria-label="Xem ảnh kỷ niệm 4"><img src="https://6ad58ee0106919c03a91f806.imgix.net/sandbox/1792379518283_111795119986068646_2309522099900149030_5a4475b7624abd146e6d262ae31e47e0.jpg" alt="Ảnh kỷ niệm 4"></button>
+                </div>
+                <p class="memory-hint">Chạm để xem ảnh; mỗi kỷ niệm sẽ tan biến. Đóng ảnh cuối để nhận lời chúc ❤️</p>
+            </div>
+        </div>
+
+        <!-- Hộp thoại hiển thị lời chúc -->
+        <div class="modal-card" id="letterModal">
+            <h3 id="letterTitle">Gửi Mẹ Của Con ❤️</h3>
+            <p id="letterMessage"></p>
+            <p id="letterSignature" style="text-align: right; font-weight: bold; margin-top: 15px; color: #d63384;">Yêu Mẹ nhiều lắm! 💕</p>
+            <button class="close-modal" onclick="closeLetter()">Đóng lại</button>
+        </div>
+
+        <div class="image-viewer" id="imageViewer" role="dialog" aria-modal="true" aria-label="Xem ảnh kỷ niệm" hidden>
+            <button class="viewer-button viewer-close" id="viewerClose" type="button" aria-label="Đóng ảnh">×</button>
+            <button class="viewer-button viewer-previous" id="viewerPrevious" type="button" aria-label="Ảnh trước">‹</button>
+            <img class="viewer-image" id="viewerImage" alt="">
+            <button class="viewer-button viewer-next" id="viewerNext" type="button" aria-label="Ảnh tiếp theo">›</button>
+            <span class="viewer-counter" id="viewerCounter" aria-live="polite"></span>
+        </div>
+
+        <div class="final-wish" id="finalWish" role="dialog" aria-modal="true" aria-labelledby="finalWishTitle" hidden>
+            <div class="wish-card">
+                <h2 id="finalWishTitle">Mẹ à, con thương Mẹ ❤️</h2>
+                <p>Mẹ à, con không giỏi nói những lời hoa mỹ, nhưng con muốn Mẹ biết là con thương Mẹ nhiều lắm.</p>
+                <p>Cảm ơn Mẹ vì những điều Mẹ vẫn âm thầm làm cho con mỗi ngày. Có Mẹ ở bên, con luôn thấy mình thật may mắn.</p>
+                <p>Con chỉ mong Mẹ luôn khỏe mạnh, vui vẻ và an yên. 20/10 này, con chúc Mẹ có thật nhiều niềm vui — hôm nay và cả những ngày bình thường nữa.</p>
+                <p class="wish-signature">Con yêu Mẹ nhiều lắm. 💕</p>
+                <button class="wish-replay" id="wishReplay" type="button">Xem lại kỷ niệm</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const openGiftButton = document.getElementById('openGiftButton');
+        let holdTimer;
+        let cardOpened = false;
+        const photoButtons = Array.from(document.querySelectorAll('.photo-item'));
+        const imageViewer = document.getElementById('imageViewer');
+        const finalWish = document.getElementById('finalWish');
+        const viewerImage = document.getElementById('viewerImage');
+        const tulipFlowers = Array.from(document.querySelectorAll('.tulip-flower'));
+        const viewedPhotos = new Set();
+        let currentPhotoIndex = 0;
+        let lastFocusedPhoto;
+
+        function startHolding(event) {
+            if (cardOpened || openGiftButton.classList.contains('holding')) {
+                event.preventDefault();
+                return;
+            }
+            if (event.type === 'pointerdown' && event.button !== 0) {
+                return;
+            }
+
+            event.preventDefault();
+            clearTimeout(holdTimer);
+            openGiftButton.classList.add('holding');
+
+            if (event.pointerId !== undefined) {
+                openGiftButton.setPointerCapture(event.pointerId);
+            }
+
+            holdTimer = setTimeout(openCard, 1200);
+        }
+
+        function stopHolding() {
+            clearTimeout(holdTimer);
+            openGiftButton.classList.remove('holding');
+        }
+
+        openGiftButton.addEventListener('pointerdown', startHolding);
+        openGiftButton.addEventListener('pointerup', stopHolding);
+        openGiftButton.addEventListener('pointercancel', stopHolding);
+        openGiftButton.addEventListener('lostpointercapture', stopHolding);
+        openGiftButton.addEventListener('keydown', (event) => {
+            if (event.key === ' ' || event.key === 'Enter') {
+                startHolding(event);
+            }
+        });
+        openGiftButton.addEventListener('keyup', (event) => {
+            if (event.key === ' ' || event.key === 'Enter') {
+                stopHolding();
+            }
+        });
+        window.addEventListener('blur', stopHolding);
+
+        function openCard() {
+            if (cardOpened) {
+                return;
+            }
+            cardOpened = true;
+            stopHolding();
+            document.getElementById('welcomeScreen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('welcomeScreen').style.display = 'none';
+                document.getElementById('mainContent').classList.add('active');
+            }, 500);
+            createHearts();
+        }
+
+        const tulipLetters = [
+            {
+                title: 'Gửi Mẹ Yêu Quý ❤️',
+                message: 'Nhân ngày 20/10, con muốn gửi đến Mẹ những lời chúc tốt đẹp và chân thành nhất.',
+                signature: 'Mẹ luôn là người con yêu quý! 💕'
+            },
+            {
+                title: 'Cảm ơn Mẹ 🌷',
+                message: 'Cảm ơn Mẹ vì cả đời hy sinh, luôn bao bọc và dành cho chúng con những điều tốt đẹp nhất.',
+                signature: 'Con biết ơn Mẹ nhiều lắm! 💗'
+            },
+            {
+                title: 'Chúc Mẹ luôn vui khỏe 💐',
+                message: 'Chúc Mẹ luôn mạnh khỏe, bình an, lúc nào cũng vui vẻ và rạng rỡ.',
+                signature: 'Mong Mẹ luôn cười thật tươi! 😊'
+            },
+            {
+                title: 'Mẹ là bông hoa đẹp nhất 🌸',
+                message: 'Mẹ luôn xinh đẹp, dịu dàng và là bông hoa tươi thắm nhất trong gia đình mình.',
+                signature: 'Nhà mình thật may mắn vì có Mẹ! ❤️'
+            },
+            {
+                title: 'Con yêu Mẹ ❤️',
+                message: 'Mong mỗi ngày của Mẹ đều ngập tràn yêu thương. Con sẽ luôn ở bên và thương Mẹ thật nhiều.',
+                signature: 'Yêu Mẹ nhiều lắm! 💕'
+            }
+        ];
+
+        function showLetter(index) {
+            const letter = tulipLetters[index];
+            document.getElementById('letterTitle').textContent = letter.title;
+            document.getElementById('letterMessage').textContent = letter.message;
+            document.getElementById('letterSignature').textContent = letter.signature;
+            document.getElementById('letterModal').classList.add('show');
+            document.querySelector('#letterModal .close-modal').focus();
+            createHearts();
+        }
+
+        function pickTulip(flower) {
+            if (flower.classList.contains('picked')) {
+                return;
+            }
+            flower.classList.add('picked');
+            flower.setAttribute('aria-disabled', 'true');
+            showLetter(Number(flower.dataset.letterIndex));
+            setTimeout(() => flower.remove(), 450);
+        }
+
+        tulipFlowers.forEach((flower) => {
+            flower.addEventListener('click', () => pickTulip(flower));
+            flower.addEventListener('keydown', (event) => {
+                if (event.key === ' ' || event.key === 'Enter') {
+                    event.preventDefault();
+                    pickTulip(flower);
+                }
+            });
+        });
+
+        function closeLetter() {
+            document.getElementById('letterModal').classList.remove('show');
+            const nextFlower = tulipFlowers.find((flower) => !flower.classList.contains('picked'));
+            (nextFlower || photoButtons[0]).focus();
+        }
+
+        function showPhoto(index) {
+            currentPhotoIndex = (index + photoButtons.length) % photoButtons.length;
+            const image = photoButtons[currentPhotoIndex].querySelector('img');
+            viewerImage.src = image.src;
+            viewerImage.alt = image.alt;
+            markPhotoViewed(currentPhotoIndex);
+            document.getElementById('viewerCounter').textContent =
+                `${viewedPhotos.size} / ${photoButtons.length} ảnh đã tan biến`;
+        }
+
+        function markPhotoViewed(index) {
+            if (viewedPhotos.has(index)) {
+                return;
+            }
+            viewedPhotos.add(index);
+            const photoButton = photoButtons[index];
+            photoButton.classList.add('photo-dissolving');
+            photoButton.addEventListener('animationend', () => {
+                photoButton.hidden = true;
+            }, { once: true });
+        }
+
+        function openPhotoViewer(index) {
+            lastFocusedPhoto = photoButtons[index];
+            showPhoto(index);
+            imageViewer.hidden = false;
+            document.getElementById('viewerClose').focus();
+        }
+
+        function closePhotoViewer() {
+            imageViewer.hidden = true;
+            if (viewedPhotos.size === photoButtons.length) {
+                finalWish.hidden = false;
+                document.getElementById('wishReplay').focus();
+                return;
+            }
+            const focusTarget = lastFocusedPhoto.hidden
+                ? photoButtons.find((button) => !button.hidden)
+                : lastFocusedPhoto;
+            focusTarget.focus();
+        }
+
+        function replayMemories() {
+            viewedPhotos.clear();
+            photoButtons.forEach((button) => {
+                button.hidden = false;
+                button.classList.remove('photo-dissolving');
+            });
+            finalWish.hidden = true;
+            photoButtons[0].focus();
+        }
+
+        photoButtons.forEach((button, index) => {
+            button.addEventListener('click', () => openPhotoViewer(index));
+        });
+        document.getElementById('wishReplay').addEventListener('click', replayMemories);
+        document.getElementById('viewerPrevious').addEventListener('click', () => {
+            showPhoto(currentPhotoIndex - 1);
+        });
+        document.getElementById('viewerNext').addEventListener('click', () => {
+            showPhoto(currentPhotoIndex + 1);
+        });
+        document.getElementById('viewerClose').addEventListener('click', closePhotoViewer);
+        imageViewer.addEventListener('click', (event) => {
+            if (event.target === imageViewer) {
+                closePhotoViewer();
+            }
+        });
+        document.addEventListener('keydown', (event) => {
+            if (imageViewer.hidden) {
+                return;
+            }
+            if (event.key === 'Escape') {
+                closePhotoViewer();
+            } else if (event.key === 'ArrowLeft') {
+                showPhoto(currentPhotoIndex - 1);
+            } else if (event.key === 'ArrowRight') {
+                showPhoto(currentPhotoIndex + 1);
+            }
+        });
+
+        function createHearts() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * 80 + 10 + '%';
+                    heart.style.bottom = '20px';
+                    heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                    document.getElementById('mainContainer').appendChild(heart);
+
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 150);
+            }
+        }
+
+        function createAmbientEffect() {
+            const effect = document.createElement('span');
+            const showMessage = Math.random() > 0.5;
+            effect.className = showMessage ? 'ambient-item ambient-message' : 'ambient-item';
+            effect.textContent = showMessage ? "Happy Women's Day" : '❤️';
+            effect.style.left = Math.random() * 85 + 5 + '%';
+            effect.style.fontSize = showMessage ? '14px' : (Math.random() * 12 + 18) + 'px';
+            document.getElementById('ambientEffects').appendChild(effect);
+            effect.addEventListener('animationend', () => effect.remove(), { once: true });
+        }
+
+        createAmbientEffect();
+        setInterval(createAmbientEffect, 900);
+    </script>
+</body>
+</html>
